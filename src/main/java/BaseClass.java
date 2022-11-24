@@ -1,15 +1,13 @@
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-
-import java.util.Properties;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class BaseClass {
-
-    public static WebDriver driver;
-    public static Properties config  = new Properties();
-
-    @BeforeClass
+    @Before
     public void setUp() {
-
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
+        driver.manage().window().maximize();
+        driver.close();
     }
 }
