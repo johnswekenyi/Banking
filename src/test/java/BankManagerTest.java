@@ -1,7 +1,7 @@
-import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -15,8 +15,7 @@ public class BankManagerTest extends BaseClass {
     @Test()
     public void addNewCustomerTest() throws InterruptedException {
         loginAsBankManagerTest();
-        driver.findElement(By.xpath("//button[contains(text(), 'Add Customer\n" +
-                "\t\t')]")).click();
+        driver.findElement(By.xpath("//button[contains(text(), 'Add Customer')]")).click();
         Thread.sleep(2000);
         driver.findElement(By.cssSelector("input[placeholder='First Name']")).sendKeys("Test");
         driver.findElement(By.cssSelector("input[placeholder='Last Name']")).sendKeys("Last");
@@ -30,15 +29,26 @@ public class BankManagerTest extends BaseClass {
 
         Thread.sleep(2000);
     }
-
     @Test
     public void createBankAccountForCustomer() throws InterruptedException {
         addNewCustomerTest();
         driver.findElement(By.xpath("//button[contains(text(), 'Open Account')]")).click();
-//        driver.findElement(By.cssSelector("input[placeholder='---Customer Name---']")).;
         Thread.sleep(2000);
-    }
 
+        //Select Created customer
+        Select selectCustomer = new Select(driver.findElement(By.name("userSelect")));
+        selectCustomer.selectByVisibleText("Test Last");
+
+        //Select currency for account creation
+        Select selectCurrency = new Select(driver.findElement(By.name("currency")));
+        selectCurrency.selectByVisibleText("Dollar");
+        driver.findElement(By.xpath("//button[contains(text(), 'Process')]")).click();
+        Thread.sleep(2000);
+
+        assertThat(driver.switchTo().alert().getText(), is("Account created successfully with account Number :1016"));
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+    }
     @Test
     public void deleteCreatedUserTest() {
 
