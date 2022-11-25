@@ -21,15 +21,49 @@ public class CustomerActionsTest extends BankManagerTest {
         Thread.sleep(2000);
 
         assertAccountCreation();
-        assertTrue(driver.getPageSource().contains("Account Number : 1016"));
+        assertTrue(driver.getPageSource().contains("Account Number :"));
     }
     @Test
-    public void depositMoneyToAccountAndVerifyTest() {
-
+    public void depositMoneyToAccountAndVerifyTest() throws InterruptedException {
+        verifyAccountCreatedIsTheSameTest();
+        deposit();
     }
     @Test
-    public void withdrawMoneyFromAccountAndVerifyTest() {
+    public void withdrawMoreMoneyFromAccountThanAvailableBalanceTest() throws InterruptedException {
+        verifyAccountCreatedIsTheSameTest();
 
+        driver.findElement(By.xpath("//button[contains(text(), 'Withdrawl')]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.cssSelector("input[placeholder='amount']")).sendKeys("500");
+        driver.findElement(By.cssSelector(".btn-default")).click();
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("//button[contains(text(), 'Transactions')]")).click();
+        Thread.sleep(1000);
+        assertTrue(driver.getPageSource().contains("500 :"));
+        assertTrue(driver.getPageSource().contains("Transaction Failed. You can not withdraw amount more than the balance."));
+    }
+
+    @Test
+    public void withdrawAmountLessThanAvailableBalance() throws InterruptedException {
+        verifyAccountCreatedIsTheSameTest();
+        Thread.sleep(2000);
+        deposit();
+
+        driver.findElement(By.xpath("//button[contains(text(), 'Transactions')]")).click();
+        Thread.sleep(1000);
+        assertTrue(driver.getPageSource().contains("1000 :"));
+        Thread.sleep(1000);
+
+        driver.findElement(By.xpath("//button[contains(text(), 'Withdrawl')]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.cssSelector("input[placeholder='amount']")).sendKeys("500");
+        driver.findElement(By.cssSelector(".btn-default")).click();
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("//button[contains(text(), 'Transactions')]")).click();
+        Thread.sleep(1000);
+        assertTrue(driver.getPageSource().contains("Transaction successful"));
     }
 
     private void assertAccountCreation() throws InterruptedException {
@@ -42,5 +76,18 @@ public class CustomerActionsTest extends BankManagerTest {
         Thread.sleep(1000);
         driver.findElement(By.xpath("//button[contains(text(), 'Login')]")).click();
         Thread.sleep(2000);
+    }
+
+    public void deposit() throws InterruptedException {
+        driver.findElement(By.xpath("//button[contains(text(), 'Deposit')]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.cssSelector("input[placeholder='amount']")).sendKeys("1000");
+        driver.findElement(By.cssSelector(".btn-default")).click();
+        Thread.sleep(2000);
+
+        driver.findElement(By.xpath("//button[contains(text(), 'Transactions')]")).click();
+        Thread.sleep(1000);
+        assertTrue(driver.getPageSource().contains("1000 :"));
+        Thread.sleep(1000);
     }
 }
