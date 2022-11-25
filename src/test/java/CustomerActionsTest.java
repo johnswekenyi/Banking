@@ -1,12 +1,8 @@
-import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
-import static java.awt.SystemColor.text;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class CustomerActionsTest extends BankManagerTest {
     @Test
