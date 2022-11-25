@@ -9,18 +9,18 @@ import static org.junit.Assert.assertThat;
 public class BankManagerTest extends BaseClass {
     @Test
     public void loginAsBankManagerTest() throws InterruptedException {
-        driver.findElement(By.xpath("//button[contains(text(), 'Bank Manager Login')]")).click();
+        driver.findElement(By.xpath("//button[normalize-space()='Bank Manager Login']")).click();
         Thread.sleep(2000);
     }
     @Test()
     public void addNewCustomerTest() throws InterruptedException {
         loginAsBankManagerTest();
-        driver.findElement(By.xpath("//button[contains(text(), 'Add Customer')]")).click();
+        driver.findElement(By.xpath("//button[normalize-space()='Add Customer']")).click();
         Thread.sleep(2000);
         driver.findElement(By.cssSelector("input[placeholder='First Name']")).sendKeys("Test");
         driver.findElement(By.cssSelector("input[placeholder='Last Name']")).sendKeys("Last");
         driver.findElement(By.cssSelector("input[placeholder='Post Code']")).sendKeys("00100");
-        driver.findElement(By.cssSelector(".btn-default")).click();
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
 
         //Assert customer is successfully created
         assertThat(driver.switchTo().alert().getText(), is("Customer added successfully with customer id :6"));
@@ -32,7 +32,7 @@ public class BankManagerTest extends BaseClass {
     @Test
     public void createBankAccountForCustomer() throws InterruptedException {
         addNewCustomerTest();
-        driver.findElement(By.xpath("//button[contains(text(), 'Open Account')]")).click();
+        driver.findElement(By.xpath("//button[normalize-space()='Open Account']")).click();
         Thread.sleep(2000);
 
         //Select Created customer
@@ -42,7 +42,7 @@ public class BankManagerTest extends BaseClass {
         //Select currency for account creation
         Select selectCurrency = new Select(driver.findElement(By.name("currency")));
         selectCurrency.selectByVisibleText("Dollar");
-        driver.findElement(By.xpath("//button[contains(text(), 'Process')]")).click();
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
         Thread.sleep(2000);
 
         assertThat(driver.switchTo().alert().getText(), is("Account created successfully with account Number :1016"));
@@ -50,7 +50,8 @@ public class BankManagerTest extends BaseClass {
         alert.accept();
     }
     @Test
-    public void deleteCreatedUserTest() {
-
+    public void deleteCreatedUserTest() throws InterruptedException {
+        createBankAccountForCustomer();
+        Thread.sleep(1000);
     }
 }
