@@ -4,6 +4,7 @@
 * Junit is also used
 
 ### The Task
+
 1. [ ]  Access the link: https://www.globalsqa.com/angularJs-protractor/BankingProject/
 2. [ ]  Create automated tests that covers all the test scenarios for the following Processes
    (Should be guided by the manual test cases done):
@@ -12,7 +13,7 @@
    3. [ ]  Login as the customer specified in (i) above.
    4. [ ]  Login as the customer, verify if the account number created above is similar.
    5. [ ]  Perform 2 different transactions. Verify the transactions in the Transaction Tab.
-   5. [ ]  Login as Bank Manager and delete the created account.
+   6. [ ]  Login as Bank Manager and delete the created account.
 
 ### Setup
 
@@ -26,3 +27,7 @@
 * You can run the tests directly from the IDE you are using or using keyboard shorcut commands to run the tets
   * Mac - CTR + R
   * Windows - CTR + R
+
+### Sample test results with coverage for bank
+
+![Banking__BankManagerTest_java.png](assets/Banking_–_BankManagerTest_java.png)
