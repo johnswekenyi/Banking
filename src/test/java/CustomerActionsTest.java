@@ -1,11 +1,12 @@
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
+import static java.awt.SystemColor.text;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 public class CustomerActionsTest extends BankManagerTest {
     @Test
@@ -25,7 +26,7 @@ public class CustomerActionsTest extends BankManagerTest {
         Thread.sleep(2000);
 
         //Assert the user logged in is the created user
-        //ToDo
+        assertTrue(driver.getPageSource().contains("Test Last"));
     }
     @Test
     public void verifyAccountCreatedIsTheSameTest() {
